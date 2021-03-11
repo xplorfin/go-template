@@ -23,6 +23,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Test
         run: make ci-test
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
       - name: Send coverage
         uses: shogo82148/actions-goveralls@v1
         with:
