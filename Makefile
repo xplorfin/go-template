@@ -38,7 +38,7 @@ RESET_COLOR=\033[0m
 
 COLORECHO = $(1)$(2)$(RESET_COLOR)
 
-default: setup help
+default: help
 
 # build a vendored binary for macos
 macos: gomvendor build-macos
@@ -46,7 +46,7 @@ macos: gomvendor build-macos
 # build a vendored binary for linx
 linux: gomvendor build-linux
 
-setup: ## setup the repository (enables git hooks and downloads dependencies)
+setup-hooks: ## setup the repository (enables git hooks and downloads dependencies)
 	git config core.hooksPath .github/hooks --replace-all
 
 bench:  ## Run all benchmarks in the Go application
@@ -65,18 +65,18 @@ godocs: ## Run a godoc server
 
 golangci-install:
 	@#Travis (has sudo)
-	@if [ "$(shell which golangci-lint)" = "" ] && [ $(TRAVIS) ]; then curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s && sudo cp ./bin/golangci-lint $(go env GOPATH)/bin/; fi;
+	@if [ "$(shell which golangci-lint)" = "" ] && [ $(TRAVIS) ]; then curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.33.0 && sudo cp ./bin/golangci-lint $(go env GOPATH)/bin/; fi;
 	@#AWS CodePipeline
 	@if [ "$(shell which golangci-lint)" = "" ] && [ "$(CODEBUILD_BUILD_ID)" != "" ]; then curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin; fi;
 	@#Github Actions
-	@if [ "$(shell which golangci-lint)" = "" ] && [ "$(GITHUB_WORKFLOW)" != "" ]; then curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s && sudo cp ./bin/golangci-lint $(go env GOPATH)/bin/; fi;
+	@if [ "$(shell which golangci-lint)" = "" ] && [ "$(GITHUB_WORKFLOW)" != "" ]; then curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sudo sh -s -- -b $(go env GOPATH)/bin; fi;
 	@#Brew - MacOS
 	@if [ "$(shell which golangci-lint)" = "" ] && [ "$(shell which brew)" != "" ]; then brew install golangci-lint; fi;
 
 go-acc-install:
 	@if [ "$(shell which "go-acc")" = "" ]; then go get -u github.com/ory/go-acc; fi;
 
-lint: setup golangci-install ## Run the golangci-lint application (install if not found) & fix issues if possible
+lint: golangci-install ## Run the golangci-lint application (install if not found) & fix issues if possible
 	@golangci-lint run --fix
 
 # pre-commit hook
