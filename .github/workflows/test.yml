@@ -7,11 +7,33 @@ on:
       - master
 
 jobs:
-  test:
+  lint:
     if: "!contains(toJSON(github.event.commits.*.message), '[ci skip]')"
     strategy:
       matrix:
         go-version: [1.13.x, 1.14.x, 1.15.x, 1.16.x]
+        platform: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Linters
+        run: "curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.35.2"
+      - name: Test
+        run: make lint
+      - name: Build
+        env:
+          GO111MODULE: "on"
+        run: go build ./...
+  test:
+    if: "!contains(toJSON(github.event.commits.*.message), '[ci skip]')"
+    strategy:
+      matrix:
+        go-version: [1.13.x, 1.14.x, 1.15.x]
         platform: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.platform }}
     steps:
