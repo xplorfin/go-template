@@ -3,7 +3,7 @@
 [![Build status](https://github.com/xplorfin/go-template/workflows/test/badge.svg)](https://github.com/xplorfin/go-template/actions?query=workflow%3Atest)
 [![Build status](https://github.com/xplorfin/go-template/workflows/goreleaser/badge.svg)](https://github.com/xplorfin/go-template/actions?query=workflow%3Agoreleaser)
 [![](https://godoc.org/github.com/xplorfin/go-template?status.svg)](https://godoc.org/github.com/xplorfin/go-template)
-
+[![Go Report Card](https://goreportcard.com/badge/github.com/xplorfin/go-template)](https://goreportcard.com/report/github.com/xplorfin/go-template)
 
 # What is this?
 
