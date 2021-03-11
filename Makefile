@@ -76,7 +76,7 @@ golangci-install:
 go-acc-install:
 	@if [ "$(shell which "go-acc")" = "" ]; then go get -u github.com/ory/go-acc; fi;
 
-lint: setup golangci-install ## Run the golangci-lint application (install if not found) & fix issues if possible
+lint: golangci-install ## Run the golangci-lint application (install if not found) & fix issues if possible
 	@golangci-lint run --fix
 
 # pre-commit hook
