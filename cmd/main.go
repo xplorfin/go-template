@@ -1,8 +1,9 @@
 package cmd
 
 import (
-	"github.com/urfave/cli/v2"
 	"log"
+
+	"github.com/urfave/cli/v2"
 )
 
 func Start(args []string) {
