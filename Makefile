@@ -1,5 +1,5 @@
 # Constants
-GCR_URL=ghcr.io/xplorfin
+GHCR_URL=ghcr.io/xplorfin
 
 # variables related to your microservice
 # change SERVICE_NAME to whatever you're naming your microservice
@@ -112,12 +112,12 @@ help: ## This help dialog.
 		printf "%-30s %s\n" $$help_command $$help_info ; \
 	done
 
-docker: docker-build docker-push ## build and push docker image to gcr
+docker: docker-build docker-push ## build and push docker image to GHCR
 
 # Builds a docker container from a Dockerfile.
 # If you have more complex Docker arguments than just tags and the source,
 # consider writing your own recipe.
-DOCKER_IMAGE_NAME=$(GCR_URL)/$(SERVICE_NAME)
+DOCKER_IMAGE_NAME=$(GHCR_URL)/$(SERVICE_NAME)
 docker-build: docker/Dockerfile.make gomvendor ## build a docker file
 	@echo "[*] Latest git commit hash: $(call COLORECHO,$(GREEN),$(LATEST_COMMIT_HASH))"
 	@echo "[*] Building Docker image $(call COLORECHO,$(BLUE),$(DOCKER_IMAGE_NAME))" \
@@ -127,8 +127,8 @@ docker-build: docker/Dockerfile.make gomvendor ## build a docker file
 		-t $(DOCKER_IMAGE_NAME):$(LATEST_COMMIT_HASH) \
 		.
 
-docker-push: ## pushes a built image to gcr
-	@echo "[*] Pushing $(call COLORECHO,$(LIGHT_BLUE),$(DOCKER_IMAGE_NAME):$(LATEST_COMMIT_HASH)) to GCR"
+docker-push: ## pushes a built image to GHCR
+	@echo "[*] Pushing $(call COLORECHO,$(LIGHT_BLUE),$(DOCKER_IMAGE_NAME):$(LATEST_COMMIT_HASH)) to GHCR"
 	docker push $(DOCKER_IMAGE_NAME):$(LATEST_COMMIT_HASH)
-	@echo "[*] Pushing $(call COLORECHO,$(MAGENTA),$(DOCKER_IMAGE_NAME):latest) to GCR"
+	@echo "[*] Pushing $(call COLORECHO,$(MAGENTA),$(DOCKER_IMAGE_NAME):latest) to GHCR"
 	docker push $(DOCKER_IMAGE_NAME):latest
