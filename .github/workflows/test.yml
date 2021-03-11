@@ -25,6 +25,8 @@ jobs:
         uses: mxschmitt/action-tmate@v3
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
+      - name: Install Linters
+        run: "curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin"
       - name: Test
         run: make ci-test
         env:
