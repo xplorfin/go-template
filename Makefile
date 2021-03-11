@@ -38,7 +38,7 @@ RESET_COLOR=\033[0m
 
 COLORECHO = $(1)$(2)$(RESET_COLOR)
 
-default: setup help
+default: help
 
 # build a vendored binary for macos
 macos: gomvendor build-macos
@@ -46,7 +46,7 @@ macos: gomvendor build-macos
 # build a vendored binary for linx
 linux: gomvendor build-linux
 
-setup: ## setup the repository (enables git hooks and downloads dependencies)
+setup-hooks: ## setup the repository (enables git hooks)
 	git config core.hooksPath .github/hooks --replace-all
 
 bench:  ## Run all benchmarks in the Go application
