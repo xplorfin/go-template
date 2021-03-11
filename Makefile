@@ -86,7 +86,6 @@ test: ## run tests without coverage reporting
 	@go test ./...
 
 ci-test: golangci-install go-acc-install # run a test with coverage
-	@golangci-lint run
 	@go-acc -o profile.cov ./...
 
 gomvendor: ## run tidy & vendor
