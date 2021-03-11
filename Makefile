@@ -85,7 +85,7 @@ pre-commit: lint
 test: ## run tests without coverage reporting
 	@go test ./...
 
-ci-test: golangci-install go-acc-install # run a test with coverage
+ci-test: go-acc-install # run a test with coverage
 	@go-acc -o profile.cov ./...
 
 gomvendor: ## run tidy & vendor
