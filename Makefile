@@ -64,14 +64,14 @@ godocs: ## Run a godoc server
 
 
 golangci-install:
-	@#Brew - MacOS
-	@if [ "$(shell which golangci-lint)" = "" ] && [ "$(shell which brew)" != "" ]; then brew install golangci-lint; fi;
 	@#Travis (has sudo)
 	@if [ "$(shell which golangci-lint)" = "" ] && [ $(TRAVIS) ]; then curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.33.0 && sudo cp ./bin/golangci-lint $(go env GOPATH)/bin/; fi;
 	@#AWS CodePipeline
 	@if [ "$(shell which golangci-lint)" = "" ] && [ "$(CODEBUILD_BUILD_ID)" != "" ]; then curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin; fi;
 	@#Github Actions
 	@if [ "$(shell which golangci-lint)" = "" ] && [ "$(GITHUB_WORKFLOW)" != "" ]; then curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sudo sh -s -- -b $(go env GOPATH)/bin; fi;
+	@#Brew - MacOS
+	@if [ "$(shell which golangci-lint)" = "" ] && [ "$(shell which brew)" != "" ]; then brew install golangci-lint; fi;
 
 go-acc-install:
 	@if [ "$(shell which "go-acc")" = "" ]; then go get -u github.com/ory/go-acc; fi;
